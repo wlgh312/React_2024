@@ -1,23 +1,60 @@
 <!DOCTYPE html>
 <html lang="">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <div>
-    <h1>JavaScript Event</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      .myColor {
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>JavaScript Event</h1>
 
-    <button name="button 01">Btn 01</button>
-    <button name="button 02">Btn 02</button>
-    <button name="button 03" id="btn03">Btn 03</button>
-    <button name="button 04" id="btn04">Btn 04</button>
-  </div>
+      <!-- 소문자(onclick)는 인라인메서드, 대문자(onClick)는 리액트 메서드 -->
+      <button name="button 01" onclick="alert('Good Morning!!')">Btn 01</button>
+      <button name="button 02" onclick="btn02Event">Btn 02</button>
+      <button name="button 03" id="btn03">Btn 03</button>
+      <button name="button 04" id="btn04">Btn 04</button>
+      <button name="button 05" id="btn05">Btn 05</button>
+      <button name="button 06" id="btn06">Btn 06</button>
+    </div>
 
-  <script type="text/javascript">
-    
-  </script>
-</body>
+    <script type="text/javascript">
+      const btn02Event = function () {
+        alert("Hello World");
+      };
+
+      const btn04Event = function () {
+        alert("Hello World4");
+      };
+
+      const btn05Event = function (evt) {
+        //console.log(evt.target);
+        evt.target.className = "myColor";
+      };
+
+      const btn06Event = function (color) {
+        console.log(color);
+        document.getElementById("btn06").className = color;
+      };
+
+      document.getElementById("btn03").addEventListener("click", function () {
+        alert("Good Evening!!!");
+      });
+
+      // 1. 이벤트 핸들러에 매개변수가 없거나 이벤트객체 1개만 존재하는 경우는 () 없이 이벤트 핸들러 이름만 값으로 참조한다.
+      document.getElementById("btn04").addEventListener("click", btn04Event); //괄호쓰면 즉시 실행됨 주의!
+      //document.getElementById("btn05").addEventListener("click", btn05Event);
+      document.getElementById("btn05").addEventListener("click", (evt) => btn05Event(evt));
+
+      // 2. 이벤트 이외의 매개변수가 존재하는 경우는 이벤트 핸들러 함수가 다시 실행할 함수를 호출하는 방식으로 사용해야 한다.
+      //document.getElementById("btn06").addEventListener("click", btn06Event);
+      document.getElementById("btn06").addEventListener("click", (evt) => btn06Event("myColor"));
+    </script>
+  </body>
 </html>
