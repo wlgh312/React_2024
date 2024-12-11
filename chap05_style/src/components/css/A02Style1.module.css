@@ -1,0 +1,12 @@
+.title {
+  background-color: gray;
+  color: aqua;
+  font-size: 24pt;
+  font-weight: bold;
+  padding: 20px;
+}
+
+/* :global을 붙이면 전역 설정으로 변경된다. */
+:global .innerColor {
+  color: orange;
+}

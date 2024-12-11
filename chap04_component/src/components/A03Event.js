@@ -1,17 +1,18 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 
 function A03Event() {
   const [data, setData] = useState({
-    name: '',
+    name: '',//document.getElementById('name').value
     address: '',
     age: '',
     date: '2024-12-25',
     sports: 'baseball',
     isChecked: true,
-    files: '',
+    files: {},
     language: ['React'],
     baseball: '',
-    four: [],
+    four: ['한화'],
   });
 
   const sendData = (evt) => {
@@ -48,8 +49,46 @@ function A03Event() {
     // data의 요소 이름과 같은 이름으로 input의 name 속성명을 지정한다.
     console.log(evt.target.name, evt.target.value);
     let value = Number(evt.target.value);
-    if (Number.isNaN(value)) value = 0;
+    if (Number.isNaN(value)) value = '';
     const newData = { ...data, [evt.target.name]: value };
+    setData(newData);
+  }
+
+  const changeCheck = (evt) => {
+    const newData = { ...data, [evt.target.name]: !data[evt.target.name] };//const newData = { ...data, isChecked: !data.isChecked };
+    setData(newData);
+  }
+
+  //includes => Array, String 객체에 추가됨
+  const changeCheckBox = (evt) => {
+    const value = evt.target.value;
+    //data.language.push(value) -> immer
+    if (!data.language.includes(value)) {
+      //하위 객체부터 새롭게 생성하여 tree의 모든 객체를 새롭게 생성해야 한다.
+      const newArr = data.language.concat(value);
+      const newData = { ...data, language: newArr };
+      setData(newData);
+    } else {
+      const newArr = data.language.filter(item => item !== value);
+      const newData = { ...data, language: newArr };
+      setData(newData);
+    }
+  }
+
+  const changeFile = (evt) => {
+    const files = evt.target.files;
+    //console.log(files);
+    const newFiles = { name: files[0].name, size: files[0].size, type: files[0].type };
+    const newData = { ...data, files: newFiles };
+    setData(newData);
+  }
+
+  const changeSelectBox = (evt) => {
+    const elem = evt.target.selectedOptions;
+    //console.log(elem);
+    const arr = Array.from(elem);
+    const newFour = arr.map(item => item.value);
+    const newData = { ...data, four: newFour };
     setData(newData);
   }
 
@@ -100,32 +139,32 @@ function A03Event() {
         </div>
 
         <div className="mb-3">
-          CheckBox One: {data.isChecked}<br />
+          CheckBox One: {data.isChecked ? '동의' : '동의안함'}<br />
           <div className="form-check">
-            <input type="checkbox" id="isChecked" name="isChecked" className="form-check-input" />
+            <input type="checkbox" id="isChecked" name="isChecked" className="form-check-input" onChange={changeCheck} defaultChecked={data.isChecked} />
             <label htmlFor="isChecked" className="form-check-label">동의</label>
           </div>
         </div>
 
         <div className="mb-3">
-          CheckBox: {data.language}<br />
+          CheckBox: {data.language.join(' - ')}<br />
           <div className="form-check">
-            <input type="checkbox" name="language" value="Angular" id="angular" className="form-check-input" />
+            <input type="checkbox" name="language" value="Angular" id="angular" className="form-check-input" defaultChecked={data.language.includes("Angular")} onChange={changeCheckBox} />
             <label htmlFor="angular" className="form-check-label">앵귤러</label>
           </div>
           <div className="form-check">
-            <input type="checkbox" name="language" value="React" id="react" className="form-check-input" />
+            <input type="checkbox" name="language" value="React" id="react" className="form-check-input" defaultChecked={data.language.includes("React")} onChange={changeCheckBox} />
             <label htmlFor="react" className="form-check-label">리엑트</label>
           </div>
           <div className="form-check">
-            <input type="checkbox" name="language" value="Vue" id="vue" className="form-check-input" />
+            <input type="checkbox" name="language" value="Vue" id="vue" className="form-check-input" defaultChecked={data.language.includes("Vue")} onChange={changeCheckBox} />
             <label htmlFor="vue" className="form-check-label">뷰</label>
           </div>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="file" className="form-label">File: {data.files}</label>
-          <input type="file" className="form-control" id="file" name="file" multiple />
+          <label htmlFor="file" className="form-label">File: {data.files?.name}</label>
+          <input type="file" className="form-control" id="file" name="file" multiple onChange={changeFile} />
         </div>
 
         <div className="mb-3">
@@ -144,7 +183,7 @@ function A03Event() {
 
         <div className="mb-3">
           SelectBox Multi: {data.four.join(', ')}<br />
-          <select name="four" multiple size="5" className="form-control mb-2">
+          <select name="four" multiple size="5" className="form-control mb-2" onChange={changeSelectBox} value={data.four}>
             <option>한화</option>
             <option>NC</option>
             <option>두산</option>

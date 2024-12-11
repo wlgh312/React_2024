@@ -5,6 +5,12 @@ import A02Props from './components/A02Props.jsx'
 import A01Table from './components/A01Table.jsx'
 import A02Table from './components/A02Table.jsx'
 import A03Event from './components/A03Event.js'
+import A04CreateDOM from './components/A04CreateDOM.js'
+import A05Hook from './components/A05Hook.js'
+import A06Hook from './components/A06Hook.js'
+import A07OuterOne from './components/A07OuterOne.js'
+import A07OuterTwo from './components/A07OuterTwo.js'
+import A08Immer from './components/A08Immer.js'
 
 function App() {
   const [title, setTitle] = useState('CHAP 01');
@@ -34,7 +40,12 @@ function App() {
   return (
     <div className="m-3">
       <h1>Chap04 Coponent</h1>
-
+      <A08Immer></A08Immer>
+      <A07OuterTwo name="놀부"></A07OuterTwo>
+      <A07OuterOne name="홍길동"></A07OuterOne>
+      <A06Hook></A06Hook>
+      <A05Hook></A05Hook>
+      <A04CreateDOM></A04CreateDOM>
       <A03Event></A03Event>
 
       <A02Table todoList={todoList}></A02Table>
