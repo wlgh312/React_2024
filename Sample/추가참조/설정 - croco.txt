@@ -1,9 +1,10 @@
 절대패스 설정
+설정 변경 후 프로젝트 재시작
+작성하는 3개의 모든 파일을 서버 Root에 배치
 
 1. 설치
   npm i -D react-app-alias
   npm i @craco/craco
-
 
 2. 설정 파일 작성
   2-1. jsconfig.paths.json 파일 생성

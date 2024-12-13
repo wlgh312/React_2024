@@ -30,6 +30,7 @@ Proxy
 
 
 3. .env 파일 변경
+  .env 파일은 프로젝트 Root에 붙여넣기
   REACT_APP_BASEURL=/api/contacts
   REACT_APP_BASELONG=/api/contacts_long
 
